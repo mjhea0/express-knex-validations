@@ -1,0 +1,34 @@
+{% extends "_base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+
+  <div class="container">
+    <h1>All the People</h1>
+    <br>
+    <a href="/people/new" class="btn btn-success btn-md">Add Person</a>
+    <br><br>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Username</th>
+          <th>Hobby</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for person in people %}
+          <tr>
+            <td>{{person.id}}</td>
+            <td>{{person.username}}</td>
+            <td>{{person.hobby}}</td>
+            <td>{{person.created_at}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+{% endblock %}
