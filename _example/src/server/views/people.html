@@ -16,6 +16,7 @@
           <th>Username</th>
           <th>Hobby</th>
           <th>Created</th>
+          <th>Delete?</th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +26,7 @@
             <td>{{person.username}}</td>
             <td>{{person.hobby}}</td>
             <td>{{person.created_at}}</td>
+            <td><button class="btn btn-sm btn-danger delete-btn" data-id="{{person.id}}">X</button></td>
           </tr>
         {% endfor %}
       </tbody>

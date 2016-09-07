@@ -40,4 +40,31 @@ router.post('/new', validations.verify, (req, res, next) => {
   });
 });
 
+router.delete('/delete/:id', (req, res, next) => {
+  const id = parseInt(req.params.id);
+  knex('people')
+  .del()
+  .where('id', id)
+  .returning('*')
+  .then((results) => {
+    if (results.length) {
+      res.status(200).json({
+        status: 'success',
+        message: `${results[0].username} is gone!`
+      });
+    } else {
+      res.status(404).json({
+        status: 'errror',
+        message: 'That id does not exist'
+      });
+    }
+  })
+  .catch((err) => {
+    res.status(500).json({
+      status: 'errror',
+      message: 'Something bad happened!'
+    });
+  });
+});
+
 module.exports = router;
