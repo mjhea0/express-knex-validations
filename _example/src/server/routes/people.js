@@ -67,4 +67,36 @@ router.delete('/delete/:id', (req, res, next) => {
   });
 });
 
+router.put('/update/:id', (req, res, next) => {
+  const id = parseInt(req.params.id);
+  const updatedUsername = req.body.username;
+  const updatedHobby = req.body.hobby;
+  knex('people')
+  .update({
+    username: updatedUsername,
+    hobby: updatedHobby
+  })
+  .where('id', id)
+  .returning('*')
+  .then((results) => {
+    if (results.length) {
+      res.status(200).json({
+        status: 'success',
+        message: `${results[0].username} has been updated!`
+      });
+    } else {
+      res.status(404).json({
+        status: 'errror',
+        message: 'That id does not exist'
+      });
+    }
+  })
+  .catch((err) => {
+    res.status(500).json({
+      status: 'errror',
+      message: 'Something bad happened!'
+    });
+  });
+});
+
 module.exports = router;

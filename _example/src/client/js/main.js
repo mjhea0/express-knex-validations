@@ -21,4 +21,38 @@
     }
   });
 
+  $(document).on('click', '.update-btn', function() {
+    const $this = $(this);
+    const personID = $this.attr('data-id');
+    const personUsername = $this.attr('data-username');
+    const personHobby = $this.attr('data-hobby');
+    $('#input-username').val(personUsername);
+    $('#input-hobby').val(personHobby);
+    $('#input-id').val(personID);
+  });
+
+  $(document).on('submit', '#modal-form', function(e) {
+    e.preventDefault();
+    const $updatedUsername = $('#input-username').val();
+    const $updatedHobby = $('#input-hobby').val();
+    const $personID = $('#input-id').val();
+    const payload = {
+      username: $updatedUsername,
+      hobby: $updatedHobby
+    };
+    $.ajax({
+      type: 'PUT',
+      url: `/people/update/${$personID}`,
+      data: payload
+    })
+    .done((data) => {
+      $('#myModal').modal('toggle');
+      location.reload();
+      console.log(data);
+    })
+    .fail((err) => {
+      console.log(err);
+    });
+  });
+
 })();
